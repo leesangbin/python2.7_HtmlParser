@@ -14,3 +14,8 @@ specific html tag parsing for comparing java html parsing jsoup
 2. eclipse connection clone url
 3. import general project
 4. PyDev convert project
+
+# todo list
+1. parsing https://angular-ui.github.io/bootstrap/
+
+https://github.com/angular-ui/bootstrap/blob/master/src/accordion/docs/readme.md
