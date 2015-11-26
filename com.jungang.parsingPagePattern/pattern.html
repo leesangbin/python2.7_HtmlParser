@@ -1,0 +1,330 @@
+<section id="accordion">
+	<div class="page-header">
+		<h1>
+			Accordion<small> (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/accordion">ui.bootstrap.accordion</a>)
+			</small>
+		</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-6 show-grid">
+			<div ng-controller="AccordionDemoCtrl" class="ng-scope">
+				<script type="text/ng-template" id="group-template.html">
+    <div class="panel {{panelClass || 'panel-default'}}">
+      <div class="panel-heading">
+        <h4 class="panel-title" style="color:#fa39c3">
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+        </h4>
+      </div>
+      <div class="panel-collapse collapse" uib-collapse="!isOpen">
+        <div class="panel-body" style="text-align: right" ng-transclude></div>
+      </div>
+    </div>
+  </script>
+				<p>
+					<button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
+					<button type="button" class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
+				</p>
+				<div class="checkbox">
+					<label> <input type="checkbox" ng-model="oneAtATime" class="ng-pristine ng-untouched ng-valid"> Open only one at a time
+					</label>
+				</div>
+				<uib-accordion close-others="oneAtATime">
+				<div class="panel-group" ng-transclude="">
+					<div class="panel panel-default panel-open" heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+						<div class="panel-heading" ng-keypress="toggleOpen($event)">
+							<h4 class="panel-title">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding">Static Header, initially expanded</span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse in collapse" uib-collapse="!isOpen" aria-expanded="true" aria-hidden="false" style="height: auto;">
+							<div class="panel-body" ng-transclude="">
+								<span class="ng-scope"> This content is straight in the template. </span>
+							</div>
+						</div>
+					</div>
+					<!-- ngRepeat: group in groups -->
+					<div class="panel panel-default" heading="Dynamic Group Header - 1" ng-repeat="group in groups">
+						<div class="panel-heading" ng-keypress="toggleOpen($event)">
+							<h4 class="panel-title">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding">Dynamic Group Header - 1</span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" uib-collapse="!isOpen" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+							<div class="panel-body" ng-transclude="">
+								<span class="ng-binding ng-scope"> Dynamic Group Body - 1 </span>
+							</div>
+						</div>
+					</div>
+					<!-- end ngRepeat: group in groups -->
+					<div class="panel panel-default" heading="Dynamic Group Header - 2" ng-repeat="group in groups">
+						<div class="panel-heading" ng-keypress="toggleOpen($event)">
+							<h4 class="panel-title">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding">Dynamic Group Header - 2</span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" uib-collapse="!isOpen" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+							<div class="panel-body" ng-transclude="">
+								<span class="ng-binding ng-scope"> Dynamic Group Body - 2 </span>
+							</div>
+						</div>
+					</div>
+					<!-- end ngRepeat: group in groups -->
+					<div class="panel panel-default" heading="Dynamic Body Content">
+						<div class="panel-heading" ng-keypress="toggleOpen($event)">
+							<h4 class="panel-title">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding">Dynamic Body Content</span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" uib-collapse="!isOpen" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+							<div class="panel-body" ng-transclude="">
+								<p class="ng-scope">The body of the uib-accordion group grows to fit the contents</p>
+								<button type="button" class="btn btn-default btn-sm ng-scope" ng-click="addItem()">Add Item</button>
+								<!-- ngRepeat: item in items -->
+								<div ng-repeat="item in items" class="ng-binding ng-scope">Item 1</div>
+								<!-- end ngRepeat: item in items -->
+								<div ng-repeat="item in items" class="ng-binding ng-scope">Item 2</div>
+								<!-- end ngRepeat: item in items -->
+								<div ng-repeat="item in items" class="ng-binding ng-scope">Item 3</div>
+								<!-- end ngRepeat: item in items -->
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default" heading="Custom template" template-url="group-template.html">
+						<div class="panel-heading">
+							<h4 class="panel-title" style="color: #fa39c3">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding">Custom template</span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" uib-collapse="!isOpen" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+							<div class="panel-body" style="text-align: right" ng-transclude="">
+								<span class="ng-scope"> Hello </span>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-danger" heading="Delete account" panel-class="panel-danger">
+						<div class="panel-heading" ng-keypress="toggleOpen($event)">
+							<h4 class="panel-title">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding">Delete account</span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" uib-collapse="!isOpen" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+							<div class="panel-body" ng-transclude="">
+								<p class="ng-scope">Please, to delete your account, click the button below</p>
+								<button class="btn btn-danger ng-scope">Delete</button>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default" is-open="status.open">
+						<div class="panel-heading" ng-keypress="toggleOpen($event)">
+							<h4 class="panel-title">
+								<a href="" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+									<span ng-class="{'text-muted': isDisabled}" class="ng-binding"><span class="ng-scope"> I can have markup, too! </span><i class="pull-right glyphicon ng-scope glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i> </span>
+								</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" uib-collapse="!isOpen" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+							<div class="panel-body" ng-transclude="">
+								<uib-accordion-heading class="ng-scope"></uib-accordion-heading>
+								<span class="ng-scope"> This is just some content to illustrate fancy headings. </span>
+							</div>
+						</div>
+					</div>
+				</div>
+				</uib-accordion>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<p>
+				The <strong>accordion directive</strong> builds on top of the collapse directive to provide a list of items, with collapsible bodies that are collapsed or expanded by clicking on the item's header.
+			</p>
+			<p>The body of each accordion group is transcluded into the body of the collapsible element.</p>
+			<h3>uib-accordion settings</h3>
+			<ul>
+				<li><p>
+						<code>close-others</code>
+						<em>(Default: <code>true</code>)
+						</em> - Control whether expanding an item will cause the other items to close.
+					</p></li>
+				<li><p>
+						<code>template-url</code>
+						<em>(Default: <code>template/accordion/accordion.html</code>)
+						</em> - Add the ability to override the template used on the component.
+					</p></li>
+			</ul>
+			<h3>uib-accordion-group settings</h3>
+			<ul>
+				<li><p>
+						<code>is-disabled</code>
+						<i class="glyphicon glyphicon-eye-open"></i> <em>(Default: <code>false</code>)
+						</em> - Whether the accordion group is disabled or not.
+					</p></li>
+				<li><p>
+						<code>is-open</code>
+						<i class="glyphicon glyphicon-eye-open"></i> <em>(Default: <code>false</code>)
+						</em> - Whether accordion group is open or closed.
+					</p></li>
+				<li><p>
+						<code>heading</code>
+						<em>(Default: <code>none</code>)
+						</em> - The clickable text on the group's header. You need one to be able to click on the header for toggling.
+					</p></li>
+				<li><p>
+						<code>panel-class</code>
+						<em>(Default: <code>panel-default</code>)
+						</em> - Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own. This must be a string.
+					</p></li>
+				<li><p>
+						<code>template-url</code>
+						<em>(Default: <code>template/accordion/accordion-group.html</code>)
+						</em> - Add the ability to override the template used on the component.
+					</p></li>
+			</ul>
+			<h3>
+				Default settings
+				<code>uibAccordionConfig</code>
+			</h3>
+			<ul>
+				<li><code>closeOthers</code> <em>(Default: <code>true</code>)
+				</em> - Control whether expanding an item will cause the other items to close.</li>
+			</ul>
+			<h3>Accordion heading</h3>
+			<p>
+				Instead of the
+				<code>heading</code>
+				attribute on the
+				<code>uib-accordion-group</code>
+				, you can use an
+				<code>uib-accordion-heading</code>
+				element inside a group that will be used as the group's header.
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row code">
+		<div class="col-md-12 ng-scope" ng-controller="PlunkerCtrl">
+			<div class="pull-right">
+				<button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.7', '3.1.1', '0.14.3', 'accordion')">
+					<i class="glyphicon glyphicon-edit"></i> Edit in plunker
+				</button>
+			</div>
+			<div class="ng-isolate-scope">
+				<ul class="nav nav-tabs" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}" ng-transclude="">
+					<li ng-class="{active: active, disabled: disabled}" heading="Markup" class="ng-isolate-scope active"><a href="" ng-click="select()" uib-tab-heading-transclude="" class="ng-binding">Markup</a></li>
+					<li ng-class="{active: active, disabled: disabled}" heading="JavaScript" class="ng-isolate-scope"><a href="" ng-click="select()" uib-tab-heading-transclude="" class="ng-binding">JavaScript</a></li>
+				</ul>
+				<div class="tab-content">
+					<!-- ngRepeat: tab in tabs -->
+					<div class="tab-pane ng-scope active" ng-repeat="tab in tabs" ng-class="{active: tab.active}" uib-tab-content-transclude="tab">
+						<div plunker-content="markup" class="ng-scope">
+							<pre ng-non-bindable="">
+								<code data-language="html" class="rainbow">
+									<span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">div</span></span> <span class="support attribute">ng-controller</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">AccordionDemoCtrl</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+  <span class="source js embedded"><span class="support tag script">&lt;</span><span class="entity tag script">script</span> <span class="entity tag script">type</span>=<span class="string">"text/ng-template"</span> <span class="entity tag script">id</span>=<span class="string">"group-template.html"</span><span class="support tag script">&gt;</span>
+    <span class="keyword operator">&lt;</span>div <span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"panel {{panelClass || 'panel-default'}}"</span><span class="keyword operator">&gt;</span>
+      <span class="keyword operator">&lt;</span>div <span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"panel-heading"</span><span class="keyword operator">&gt;</span>
+        <span class="keyword operator">&lt;</span>h4 <span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"panel-title"</span> style<span class="keyword operator">=</span><span class="string">"color:#fa39c3"</span><span class="keyword operator">&gt;</span>
+          <span class="keyword operator">&lt;</span>a href tabindex<span class="keyword operator">=</span><span class="string">"0"</span> <span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"accordion-toggle"</span> ng<span class="keyword operator">-</span>click<span class="keyword operator">=</span><span class="string">"toggleOpen()"</span> uib<span class="keyword operator">-</span>accordion<span class="keyword operator">-</span>transclude<span class="keyword operator">=</span><span class="string">"heading"</span><span class="keyword operator">&gt;</span><span class="keyword operator">&lt;</span>span
+            ng<span class="keyword operator">-</span><span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"{'text-muted': isDisabled}"</span><span class="keyword operator">&gt;</span>{{heading}}<span class="keyword operator">&lt;</span><span class="string regexp"><span class="string regexp open">/</span>span&gt;&lt;<span class="string regexp cclose">/</span></span>a<span class="keyword operator">&gt;</span>
+        <span class="keyword operator">&lt;</span>/h4<span class="keyword operator">&gt;</span>
+      <span class="keyword operator">&lt;</span>/div<span class="keyword operator">&gt;</span>
+      <span class="keyword operator">&lt;</span>div <span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"panel-collapse collapse"</span> uib<span class="keyword operator">-</span>collapse<span class="keyword operator">=</span><span class="string">"!isOpen"</span><span class="keyword operator">&gt;</span>
+        <span class="keyword operator">&lt;</span>div <span class="keyword">class</span><span class="keyword operator">=</span><span class="string">"panel-body"</span> style<span class="keyword operator">=</span><span class="string">"text-align: right"</span> ng<span class="keyword operator">-</span>transclude<span class="keyword operator">&gt;</span><span class="keyword operator">&lt;</span>/div<span class="keyword operator">&gt;</span>
+      <span class="keyword operator">&lt;</span>/div<span class="keyword operator">&gt;</span>
+    <span class="keyword operator">&lt;</span>/div<span class="keyword operator">&gt;</span>
+  <span class="support tag script">&lt;/</span><span class="entity tag script">script</span><span class="support tag script">&gt;</span></span>
+
+  <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">p</span></span><span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">button</span></span> <span class="support attribute">type</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">button</span><span class="string quote">"</span> <span class="support attribute">class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">btn btn-default btn-sm</span><span class="string quote">"</span> <span class="support attribute">ng-click</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">status.open = !status.open</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>Toggle last panel<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">button</span></span><span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">button</span></span> <span class="support attribute">type</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">button</span><span class="string quote">"</span> <span class="support attribute">class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">btn btn-default btn-sm</span><span class="string quote">"</span> <span class="support attribute">ng-click</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">status.isFirstDisabled = ! status.isFirstDisabled</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>Enable / Disable first panel<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">button</span></span><span
+										class="support tag cclose">&gt;</span>
+  <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">p</span></span><span class="support tag cclose">&gt;</span>
+
+  <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">div</span></span> <span class="support attribute">class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">checkbox</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">label</span></span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">input</span></span> <span class="support attribute">type</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">checkbox</span><span class="string quote">"</span> <span class="support attribute">ng-model</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">oneAtATime</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      Open only one at a time
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">label</span></span><span class="support tag cclose">&gt;</span>
+  <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">div</span></span><span class="support tag cclose">&gt;</span>
+  <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion <span class="support attribute">close-others</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">oneAtATime</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-group <span class="support attribute">heading</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">Static Header, initially expanded</span><span class="string quote">"</span> <span class="support attribute">is-open</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">status.isFirstOpen</span><span class="string quote">"</span> <span class="support attribute">is-disabled</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">status.isFirstDisabled</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      This content is straight in the template.
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-group<span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-group <span class="support attribute">heading</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">{{group.title}}</span><span class="string quote">"</span> <span class="support attribute">ng-repeat</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">group in groups</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      {{group.content}}
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-group<span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-group <span class="support attribute">heading</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">Dynamic Body Content</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">p</span></span><span class="support tag cclose">&gt;</span>The body of the uib-accordion group grows to fit the contents<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">p</span></span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">button</span></span> <span class="support attribute">type</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">button</span><span class="string quote">"</span> <span class="support attribute">class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">btn btn-default btn-sm</span><span class="string quote">"</span> <span class="support attribute">ng-click</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">addItem()</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>Add Item<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">button</span></span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">div</span></span> <span class="support attribute">ng-repeat</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">item in items</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>{{item}}<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">div</span></span><span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-group<span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-group <span class="support attribute">heading</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">Custom template</span><span class="string quote">"</span> <span class="support attribute">template-url</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">group-template.html</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      Hello
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-group<span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-group <span class="support attribute">heading</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">Delete account</span><span class="string quote">"</span> <span class="support attribute">panel-class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">panel-danger</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">p</span></span><span class="support tag cclose">&gt;</span>Please, to delete your account, click the button below<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">p</span></span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">button</span></span> <span class="support attribute">class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">btn btn-danger</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>Delete<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">button</span></span><span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-group<span class="support tag cclose">&gt;</span>
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-group <span class="support attribute">is-open</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">status.open</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">uib</span></span>-accordion-heading<span class="support tag cclose">&gt;</span>
+        I can have markup, too! <span class="support tag"><span class="support tag">&lt;</span><span class="support tag-name">i</span></span> <span class="support attribute">class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">pull-right glyphicon</span><span class="string quote">"</span> <span class="support attribute">ng-class</span><span class="support operator">=</span><span class="string quote">"</span><span class="string value">{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}</span><span class="string quote">"</span><span class="support tag cclose">&gt;</span><span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">i</span></span><span class="support tag cclose">&gt;</span>
+      <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-heading<span class="support tag cclose">&gt;</span>
+      This is just some content to illustrate fancy headings.
+    <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion-group<span class="support tag cclose">&gt;</span>
+  <span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">uib</span></span>-accordion<span class="support tag cclose">&gt;</span>
+<span class="support tag"><span class="support tag">&lt;</span><span class="support tag special">/</span><span class="support tag-name">div</span></span><span class="support tag cclose">&gt;</span>
+</code>
+							</pre>
+						</div>
+					</div>
+					<!-- end ngRepeat: tab in tabs -->
+					<div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" uib-tab-content-transclude="tab">
+						<div plunker-content="javascript" class="ng-scope">
+							<pre ng-non-bindable="">
+								<code data-language="javascript" class="rainbow">angular.<span class="function call">module</span>(<span class="string">'ui.bootstrap.demo'</span>).<span class="function call">controller</span>(<span class="string">'AccordionDemoCtrl'</span>, <span class="storage function">function</span> ($scope) {
+  $scope.oneAtATime <span class="keyword operator">=</span> <span class="constant language">true</span>;
+
+  $scope.groups <span class="keyword operator">=</span> [
+    {
+      title: <span class="string">'Dynamic Group Header - 1'</span>,
+      content: <span class="string">'Dynamic Group Body - 1'</span>
+    },
+    {
+      title: <span class="string">'Dynamic Group Header - 2'</span>,
+      content: <span class="string">'Dynamic Group Body - 2'</span>
+    }
+  ];
+
+  $scope.items <span class="keyword operator">=</span> [<span class="string">'Item 1'</span>, <span class="string">'Item 2'</span>, <span class="string">'Item 3'</span>];
+
+<span class="entity function">  $scope.addItem </span><span class="keyword operator">=</span> <span class="keyword">function</span>() {
+    <span class="keyword">var</span> newItemNo <span class="keyword operator">=</span> $scope.items.<span class="support property">length</span> <span class="keyword operator">+</span> <span class="constant numeric">1</span>;
+    $scope.items.<span class="support method">push</span>(<span class="string">'Item '</span> <span class="keyword operator">+</span> newItemNo);
+  };
+
+  $scope.status <span class="keyword operator">=</span> {
+    isFirstOpen: <span class="constant language">true</span>,
+    isFirstDisabled: <span class="constant language">false</span>
+  };
+});</code>
+							</pre>
+						</div>
+					</div>
+					<!-- end ngRepeat: tab in tabs -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
